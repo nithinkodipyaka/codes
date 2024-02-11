@@ -1,0 +1,8 @@
+import urllib.request
+def access_content():
+    gist_url = 'https://raw.githubusercontent.com/nithinkodipyaka/codes/main/c1.txt'
+    with urllib.request.urlopen(gist_url) as response:
+        content = response.read().decode('utf-8')
+    return content
+text_content = access_content()
+print(text_content)
