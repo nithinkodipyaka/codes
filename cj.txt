@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+class GistContentFetcher {
+    public static void main(String[] args) throws IOException {
+        String gistUrl = "https://raw.githubusercontent.com/nithinkodipyaka/codes/main/c12.txt";
+        String content = fetchContent(gistUrl);
+        System.out.println(content);
+    }
+    public static String fetchContent(String urlString) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                contentBuilder.append(line);
+                contentBuilder.append("\n");
+            }
+        } finally {
+            connection.disconnect();
+        }
+        return contentBuilder.toString();
+    }
+}
